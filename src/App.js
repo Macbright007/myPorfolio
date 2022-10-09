@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import PacmanLoader from "react-spinners/PacmanLoader";
+import styled from "styled-components";
+import Home from "./components/pages/Home";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const color = "#481F04";
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {loading ? (
+        <InitailSpinner>
+          <PacmanLoader color={color} loading={loading} size={80} />
+        </InitailSpinner>
+      ) : (
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            {/* <Route path="/about" element={<About />} /> */}
+          </Routes>
+        </div>
+      )}
+    </>
   );
 }
+
+const InitailSpinner = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--clr-black-1);
+`;
 
 export default App;
